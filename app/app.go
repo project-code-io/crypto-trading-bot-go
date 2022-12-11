@@ -17,12 +17,14 @@ type App struct {
 	pair     pair.Pair
 }
 
-// New acts as the default constructor for the application. This method should
-// be called over directly instantiating the App struct.
-func New(l *zap.Logger, exchange ExchangeClient) *App {
+// New acts as the default constructor for the application. Use this method
+// to create a new instance of the applcation. This method should
+// be called over directly instantiating the App struct as it initializes
+// internal attributes so that the application can run as expected.
+func New(logger *zap.Logger, exchange ExchangeClient) *App {
 	return &App{
-		logger:   l,
-		pair:     pair.BTCUSD,
+		logger:   logger,
+		pair:     pair.ETHUSD,
 		exchange: exchange,
 	}
 }
@@ -39,6 +41,7 @@ func (a *App) Start(ctx context.Context) {
 			price, err := a.exchange.GetLastPrice(ctx, a.pair)
 			if err != nil {
 				a.logger.Error("failed to get price", zap.Any("pair", a.pair), zap.Error(err))
+				break
 			}
 
 			a.logger.Info("last price", zap.String("price", price), zap.Any("pair", a.pair))

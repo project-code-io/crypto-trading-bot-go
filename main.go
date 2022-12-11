@@ -13,18 +13,19 @@ import (
 )
 
 func main() {
-	l, err := zap.NewProduction()
+	logger, err := zap.NewProduction()
 	if err != nil {
-		fmt.Println("error creating logger: %w", err)
+		fmt.Println("error creating logger:", err)
+		return
 	}
 
 	defer func() {
-		_ = l.Sync()
+		_ = logger.Sync()
 	}()
 
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
-	a := app.New(l, &exchange.Noop{})
+	a := app.New(logger, &exchange.Noop{})
 	a.Start(ctx)
 }
