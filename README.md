@@ -11,8 +11,14 @@ In order to checkout this code, first install Git and clone the code using
 the tools above.
 
 ### Go
+
 In order to get started, please install [Go](https://go.dev/dl/) version 1.19
 or above.
+
+### Golanglint-ci
+
+To be able to lint the code, you'll need to install the golanglint-cli package
+as per the [instructions](https://golangci-lint.run/usage/install/#local-installation).
 
 ### Make
 
@@ -66,3 +72,25 @@ make test
 ```
 make run
 ```
+
+### Linting
+
+```
+make lint
+```
+
+## FAQs
+
+### Will this make me rich from trading?
+
+No, this code will not make you rich. In order for that to happen, you'll need
+to be an expert at trading, and even then you're up against other experts. 
+
+This code will help you to understand how to create trading bots and to become
+a software developer. This will give you the necessary tools to build your 
+own trading strategies.
+
+### Can you write a strategy that will make me rich?
+
+No, whilst I know how to write software, I am a terrible trader. I have my own
+strategies when it comes to investments and I stick to them (for better or worse). 
