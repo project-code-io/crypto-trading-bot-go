@@ -13,5 +13,9 @@ type Noop struct {
 
 // GetLastPrice will return 0.00 for any pair in the noop exchange.
 func (n *Noop) GetLastPrice(ctx context.Context, p pair.Pair) (string, error) {
-	return "0.00", nil
+	if p == pair.BTCUSD {
+		return "20000.00", nil
+	}
+
+	return "1500.00", nil
 }
