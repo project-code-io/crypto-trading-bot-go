@@ -39,6 +39,7 @@ func (a *App) Start(ctx context.Context) {
 			price, err := a.exchange.GetLastPrice(ctx, a.pair)
 			if err != nil {
 				a.logger.Error("failed to get price", zap.Any("pair", a.pair), zap.Error(err))
+				continue
 			}
 
 			a.logger.Info("last price", zap.String("price", price), zap.Any("pair", a.pair))
