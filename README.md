@@ -5,22 +5,17 @@ trading bot in Go. To follow this series, please visit the [Youtube channel](htt
 
 ## Requirements
 
-### Git
+### Git (Required)
 
 In order to checkout this code, first install Git and clone the code using
 the tools above.
 
-### Go
+### Go (Required)
 
 In order to get started, please install [Go](https://go.dev/dl/) version 1.19
 or above.
 
-### Golanglint-ci
-
-To be able to lint the code, you'll need to install the golanglint-cli package
-as per the [instructions](https://golangci-lint.run/usage/install/#local-installation).
-
-### Make
+### Make (Required)
 
 #### Windows
 
@@ -39,6 +34,12 @@ $ sudo apt-get -y install make
 
 I've not used macOS in a number of years, but you should be able to use
 Make once you've installed [Xcode developer tools](https://www.freecodecamp.org/news/install-xcode-command-line-tools/). 
+
+### golanglint-ci (Optional)
+
+To be able to lint the code, you'll need to install the golanglint-cli package
+as per the [instructions](https://golangci-lint.run/usage/install/#local-installation).
+
 
 ## Running the code
 
