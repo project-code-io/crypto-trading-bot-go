@@ -24,7 +24,7 @@ type App struct {
 func New(logger *zap.Logger, exchange ExchangeClient) *App {
 	return &App{
 		logger:   logger,
-		pair:     pair.ETHUSD,
+		pair:     pair.BTCUSD,
 		exchange: exchange,
 	}
 }

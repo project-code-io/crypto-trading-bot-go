@@ -11,7 +11,7 @@ import (
 type Noop struct{}
 
 // GetLastPrice will return 0.00 for any pair in the noop exchange.
-func (n *Noop) GetLastPrice(ctx context.Context, p pair.Pair) (string, error) {
+func (e *Noop) GetLastPrice(ctx context.Context, p pair.Pair) (string, error) {
 	if p == pair.BTCUSD {
 		return "17000.00", nil
 	}
