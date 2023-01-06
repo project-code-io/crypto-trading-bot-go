@@ -26,6 +26,7 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
-	a := app.New(logger, &exchange.Noop{})
+	e := exchange.NewBinance(exchange.BinanceDomainUS)
+	a := app.New(logger, e)
 	a.Start(ctx)
 }

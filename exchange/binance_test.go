@@ -22,8 +22,8 @@ func TestBinanceConstructor(t *testing.T) {
 			},
 		},
 		{
-			name:  "testing that the BinanceDomainCom has the correct baseURL",
-			input: exchange.BinanceDomainCom,
+			name:  "testing that the BinanceDomainDotCom has the correct baseURL",
+			input: exchange.BinanceDomainDotCom,
 			wants: exchange.Binance{
 				BaseURL: "https://api.binance.com",
 			},
