@@ -117,7 +117,7 @@ func (e *Binance) CancelOrder(ctx context.Context, orderID string) error {
 	return nil
 }
 
-func (e *Binance) ListOrders(ctx context.Context) ([]Order, error) {
+func (e *Binance) ListOpenOrders(ctx context.Context) ([]Order, error) {
 	return nil, nil
 }
 

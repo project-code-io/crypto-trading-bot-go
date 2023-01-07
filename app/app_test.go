@@ -24,7 +24,7 @@ func TestAppStart(t *testing.T) {
 		logger := zaptest.NewLogger(t)
 
 		mockExchange := app.NewmockExchangeClient(ctrl)
-		mockExchange.EXPECT().ListOrders(gomock.Any()).Return([]exchange.Order{}, nil)
+		mockExchange.EXPECT().ListOpenOrders(gomock.Any()).Return([]exchange.Order{}, nil)
 
 		a := app.New(logger, mockExchange)
 
@@ -44,7 +44,7 @@ func TestAppStart(t *testing.T) {
 		logger := zaptest.NewLogger(t)
 
 		mockExchange := app.NewmockExchangeClient(ctrl)
-		mockExchange.EXPECT().ListOrders(gomock.Any()).Return([]exchange.Order{}, nil)
+		mockExchange.EXPECT().ListOpenOrders(gomock.Any()).Return([]exchange.Order{}, nil)
 		mockExchange.EXPECT().GetLastPrice(gomock.Any(), trading.BTCUSD).Times(1).Return("1000.00", nil)
 		mockExchange.EXPECT().GetBalance(gomock.Any(), trading.USD).Times(1).Return(int64(5000), nil)
 

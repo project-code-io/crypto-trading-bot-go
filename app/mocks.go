@@ -96,19 +96,19 @@ func (mr *mockExchangeClientMockRecorder) GetLastPrice(ctx, pair interface{}) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastPrice", reflect.TypeOf((*mockExchangeClient)(nil).GetLastPrice), ctx, pair)
 }
 
-// ListOrders mocks base method.
-func (m *mockExchangeClient) ListOrders(ctx context.Context) ([]exchange.Order, error) {
+// ListOpenOrders mocks base method.
+func (m *mockExchangeClient) ListOpenOrders(ctx context.Context) ([]exchange.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListOrders", ctx)
+	ret := m.ctrl.Call(m, "ListOpenOrders", ctx)
 	ret0, _ := ret[0].([]exchange.Order)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ListOrders indicates an expected call of ListOrders.
-func (mr *mockExchangeClientMockRecorder) ListOrders(ctx interface{}) *gomock.Call {
+// ListOpenOrders indicates an expected call of ListOpenOrders.
+func (mr *mockExchangeClientMockRecorder) ListOpenOrders(ctx interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListOrders", reflect.TypeOf((*mockExchangeClient)(nil).ListOrders), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListOpenOrders", reflect.TypeOf((*mockExchangeClient)(nil).ListOpenOrders), ctx)
 }
 
 // mockIDGenerator is a mock of IDGenerator interface.

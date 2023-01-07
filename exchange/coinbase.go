@@ -138,7 +138,7 @@ func (e *Coinbase) CancelOrder(ctx context.Context, orderID string) error {
 	return nil
 }
 
-func (e *Coinbase) ListOrders(ctx context.Context) ([]Order, error) {
+func (e *Coinbase) ListOpenOrders(ctx context.Context) ([]Order, error) {
 	return nil, nil
 }
 

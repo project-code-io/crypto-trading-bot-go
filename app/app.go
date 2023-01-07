@@ -79,7 +79,7 @@ func (a *App) Start(ctx context.Context) {
 func (a *App) clearOldOrders(ctx context.Context) error {
 	a.logger.Info("clearing old orders")
 
-	orders, err := a.exchange.ListOrders(ctx)
+	orders, err := a.exchange.ListOpenOrders(ctx)
 	if err != nil {
 		return fmt.Errorf("list all orders: %w", err)
 	}
