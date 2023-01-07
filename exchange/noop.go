@@ -42,7 +42,7 @@ func (e *Noop) CreateLimitOrder(ctx context.Context, order order.Limit) (Order, 
 	return Order{}, nil
 }
 
-func (e *Noop) CancelOrder(ctx context.Context, orderID string) error {
+func (e *Noop) CancelOrders(ctx context.Context, orderID ...string) error {
 	return nil
 }
 

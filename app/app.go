@@ -84,14 +84,18 @@ func (a *App) clearOldOrders(ctx context.Context) error {
 		return fmt.Errorf("list all orders: %w", err)
 	}
 
+	orderIDs := make([]string, 0)
+
 	for _, order := range orders {
 		if !strings.HasPrefix(order.ClientID, a.prefix) {
 			continue
 		}
 
-		if err := a.exchange.CancelOrder(ctx, order.ID); err != nil {
-			return fmt.Errorf("cancel order: %w", err)
-		}
+		orderIDs = append(orderIDs, order.ID)
+	}
+
+	if err := a.exchange.CancelOrders(ctx, orderIDs...); err != nil {
+		return fmt.Errorf("cancel orders: %w", err)
 	}
 
 	a.logger.Info("orders cleared")
@@ -146,7 +150,7 @@ func (a *App) createAndClearOrder(ctx context.Context, price string) error {
 
 	select {
 	case <-time.After(waitTime):
-		err := a.exchange.CancelOrder(ctx, eOrder.ID)
+		err := a.exchange.CancelOrders(ctx, eOrder.ID)
 		if err != nil {
 			return fmt.Errorf("cancel order: %w", err)
 		}

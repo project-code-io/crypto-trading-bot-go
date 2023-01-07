@@ -37,18 +37,23 @@ func (m *mockExchangeClient) EXPECT() *mockExchangeClientMockRecorder {
 	return m.recorder
 }
 
-// CancelOrder mocks base method.
-func (m *mockExchangeClient) CancelOrder(ctx context.Context, orderID string) error {
+// CancelOrders mocks base method.
+func (m *mockExchangeClient) CancelOrders(ctx context.Context, orderIDs ...string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CancelOrder", ctx, orderID)
+	varargs := []interface{}{ctx}
+	for _, a := range orderIDs {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CancelOrders", varargs...)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// CancelOrder indicates an expected call of CancelOrder.
-func (mr *mockExchangeClientMockRecorder) CancelOrder(ctx, orderID interface{}) *gomock.Call {
+// CancelOrders indicates an expected call of CancelOrders.
+func (mr *mockExchangeClientMockRecorder) CancelOrders(ctx interface{}, orderIDs ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelOrder", reflect.TypeOf((*mockExchangeClient)(nil).CancelOrder), ctx, orderID)
+	varargs := append([]interface{}{ctx}, orderIDs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelOrders", reflect.TypeOf((*mockExchangeClient)(nil).CancelOrders), varargs...)
 }
 
 // CreateLimitOrder mocks base method.

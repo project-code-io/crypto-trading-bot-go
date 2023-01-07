@@ -134,7 +134,7 @@ func (e *Coinbase) CreateLimitOrder(ctx context.Context, order order.Limit) (Ord
 	return Order{}, nil
 }
 
-func (e *Coinbase) CancelOrder(ctx context.Context, orderID string) error {
+func (e *Coinbase) CancelOrders(ctx context.Context, orderID ...string) error {
 	return nil
 }
 

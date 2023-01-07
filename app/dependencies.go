@@ -15,7 +15,7 @@ import (
 type ExchangeClient interface {
 	GetLastPrice(ctx context.Context, pair trading.Pair) (string, error)
 	CreateLimitOrder(ctx context.Context, order order.Limit) (exchange.Order, error)
-	CancelOrder(ctx context.Context, orderID string) error
+	CancelOrders(ctx context.Context, orderIDs ...string) error
 	ListOpenOrders(ctx context.Context) ([]exchange.Order, error)
 	GetBalance(ctx context.Context, asset trading.Asset) (int64, error)
 }

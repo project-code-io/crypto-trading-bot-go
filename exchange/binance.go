@@ -113,7 +113,7 @@ func (e *Binance) LimitOrder(ctx context.Context, order order.Limit) (Order, err
 	return Order{}, nil
 }
 
-func (e *Binance) CancelOrder(ctx context.Context, orderID string) error {
+func (e *Binance) CancelOrders(ctx context.Context, orderID ...string) error {
 	return nil
 }
 
