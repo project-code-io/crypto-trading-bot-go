@@ -45,8 +45,8 @@ func TestAppStart(t *testing.T) {
 
 		mockExchange := app.NewmockExchangeClient(ctrl)
 		mockExchange.EXPECT().ListOrders(gomock.Any()).Return([]exchange.Order{}, nil)
-		mockExchange.EXPECT().GetLastPrice(gomock.Any(), trading.BTCUSD).Times(2).Return("1000.00", nil)
-		mockExchange.EXPECT().GetBalance(gomock.Any(), trading.USD).Times(2).Return(int64(5000), nil)
+		mockExchange.EXPECT().GetLastPrice(gomock.Any(), trading.BTCUSD).Times(1).Return("1000.00", nil)
+		mockExchange.EXPECT().GetBalance(gomock.Any(), trading.USD).Times(1).Return(int64(5000), nil)
 
 		mockExchange.EXPECT().CreateLimitOrder(gomock.Any(), order.Limit{
 			ClientID: "foobar",
@@ -55,10 +55,14 @@ func TestAppStart(t *testing.T) {
 			BaseSize: "0.01",
 			Price:    "500",
 			PostOnly: true,
-		}).Times(2).Return(exchange.Order{}, nil)
+		}).Times(1).Return(exchange.Order{
+			ID: "myorder",
+		}, nil)
+
+		mockExchange.EXPECT().CancelOrder(gomock.Any(), "myorder").Return(nil)
 
 		idGen := app.NewmockIDGenerator(ctrl)
-		idGen.EXPECT().GenerateID("go-trading-bot").Times(2).Return("foobar")
+		idGen.EXPECT().GenerateID("go-trading-bot").Times(1).Return("foobar")
 
 		a := app.New(logger, mockExchange, app.WithIDGenerator(idGen))
 
@@ -66,7 +70,7 @@ func TestAppStart(t *testing.T) {
 
 		go a.Start(ctx)
 
-		time.Sleep(time.Second*2 + time.Millisecond*20)
+		time.Sleep(time.Second*1 + time.Millisecond*320)
 		cancel()
 	})
 }
