@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 
 	"github.com/project-code-io/crypto-trading-bot-go/app"
@@ -23,10 +24,20 @@ func main() {
 		_ = logger.Sync()
 	}()
 
+	if err = godotenv.Load(); err != nil {
+		logger.Error("failed to load dotenv", zap.Error(err))
+		return
+	}
+
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
-	e := exchange.NewBinance(exchange.BinanceDomainUS)
-	a := app.New(logger, e)
+	exc, err := exchange.NewNoop()
+	if err != nil {
+		logger.Error("failed to load exchange", zap.Error(err))
+		return
+	}
+
+	a := app.New(logger, exc)
 	a.Start(ctx)
 }

@@ -7,7 +7,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/project-code-io/crypto-trading-bot-go/pair"
+	"github.com/project-code-io/crypto-trading-bot-go/order"
+	"github.com/project-code-io/crypto-trading-bot-go/trading"
 )
 
 // Binance is an exchange that communicates with the binance exchange,
@@ -28,17 +29,17 @@ func NewBinance(domain BinanceDomain) *Binance {
 	return e
 }
 
-// ErrMissingPair describes an error that occurs when a pair has not
-// been implemented for an exchange.
-var ErrMissingPair = errors.New("pair value is missing for exchange")
+// ErrBadBinanceDomain describes an error in which the binance domain is not
+// correctly set.
+var ErrBadBinanceDomain = errors.New(
+	"the binance domain does not match the location of the bot",
+)
 
-var ErrBadBinanceDomain = errors.New("the binance domain does not match the location of the bot")
-
-func (e *Binance) convertPairValue(p pair.Pair) (string, error) {
+func (e *Binance) convertPairValue(p trading.Pair) (string, error) {
 	switch p {
-	case pair.BTCUSD:
+	case trading.BTCUSD:
 		return "BTCUSD", nil
-	case pair.ETHUSD:
+	case trading.ETHUSD:
 		return "ETHUSD", nil
 	default:
 		return "", ErrMissingPair
@@ -46,7 +47,7 @@ func (e *Binance) convertPairValue(p pair.Pair) (string, error) {
 }
 
 // GetLastPrice obtains the last price for the pair on binance.
-func (e *Binance) GetLastPrice(ctx context.Context, p pair.Pair) (string, error) {
+func (e *Binance) GetLastPrice(ctx context.Context, p trading.Pair) (string, error) {
 	type priceResponse struct {
 		Symbol string `json:"symbol"`
 		Price  string `json:"price"`
@@ -70,7 +71,9 @@ func (e *Binance) GetLastPrice(ctx context.Context, p pair.Pair) (string, error)
 		return "", fmt.Errorf("perform request: %w", err)
 	}
 
-	if res.StatusCode == 451 {
+	const badLocationCode = 451
+
+	if res.StatusCode == badLocationCode {
 		return "", ErrBadBinanceDomain
 	}
 
@@ -104,4 +107,20 @@ func (d BinanceDomain) baseURL() string {
 	default:
 		return ""
 	}
+}
+
+func (e *Binance) LimitOrder(ctx context.Context, order order.Limit) (Order, error) {
+	return Order{}, nil
+}
+
+func (e *Binance) CancelOrder(ctx context.Context, orderID string) error {
+	return nil
+}
+
+func (e *Binance) ListOrders(ctx context.Context) ([]Order, error) {
+	return nil, nil
+}
+
+func (e *Binance) GetBalance(ctx context.Context) (int64, error) {
+	return 0, nil
 }

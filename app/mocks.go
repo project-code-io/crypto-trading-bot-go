@@ -9,7 +9,9 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	pair "github.com/project-code-io/crypto-trading-bot-go/pair"
+	exchange "github.com/project-code-io/crypto-trading-bot-go/exchange"
+	order "github.com/project-code-io/crypto-trading-bot-go/order"
+	trading "github.com/project-code-io/crypto-trading-bot-go/trading"
 )
 
 // mockExchangeClient is a mock of ExchangeClient interface.
@@ -35,17 +37,113 @@ func (m *mockExchangeClient) EXPECT() *mockExchangeClientMockRecorder {
 	return m.recorder
 }
 
-// GetLastPrice mocks base method.
-func (m *mockExchangeClient) GetLastPrice(ctx context.Context, p pair.Pair) (string, error) {
+// CancelOrder mocks base method.
+func (m *mockExchangeClient) CancelOrder(ctx context.Context, orderID string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLastPrice", ctx, p)
+	ret := m.ctrl.Call(m, "CancelOrder", ctx, orderID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CancelOrder indicates an expected call of CancelOrder.
+func (mr *mockExchangeClientMockRecorder) CancelOrder(ctx, orderID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CancelOrder", reflect.TypeOf((*mockExchangeClient)(nil).CancelOrder), ctx, orderID)
+}
+
+// CreateLimitOrder mocks base method.
+func (m *mockExchangeClient) CreateLimitOrder(ctx context.Context, order order.Limit) (exchange.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateLimitOrder", ctx, order)
+	ret0, _ := ret[0].(exchange.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateLimitOrder indicates an expected call of CreateLimitOrder.
+func (mr *mockExchangeClientMockRecorder) CreateLimitOrder(ctx, order interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateLimitOrder", reflect.TypeOf((*mockExchangeClient)(nil).CreateLimitOrder), ctx, order)
+}
+
+// GetBalance mocks base method.
+func (m *mockExchangeClient) GetBalance(ctx context.Context, asset trading.Asset) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBalance", ctx, asset)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBalance indicates an expected call of GetBalance.
+func (mr *mockExchangeClientMockRecorder) GetBalance(ctx, asset interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*mockExchangeClient)(nil).GetBalance), ctx, asset)
+}
+
+// GetLastPrice mocks base method.
+func (m *mockExchangeClient) GetLastPrice(ctx context.Context, pair trading.Pair) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetLastPrice", ctx, pair)
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetLastPrice indicates an expected call of GetLastPrice.
-func (mr *mockExchangeClientMockRecorder) GetLastPrice(ctx, p interface{}) *gomock.Call {
+func (mr *mockExchangeClientMockRecorder) GetLastPrice(ctx, pair interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastPrice", reflect.TypeOf((*mockExchangeClient)(nil).GetLastPrice), ctx, p)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastPrice", reflect.TypeOf((*mockExchangeClient)(nil).GetLastPrice), ctx, pair)
+}
+
+// ListOrders mocks base method.
+func (m *mockExchangeClient) ListOrders(ctx context.Context) ([]exchange.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListOrders", ctx)
+	ret0, _ := ret[0].([]exchange.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListOrders indicates an expected call of ListOrders.
+func (mr *mockExchangeClientMockRecorder) ListOrders(ctx interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListOrders", reflect.TypeOf((*mockExchangeClient)(nil).ListOrders), ctx)
+}
+
+// mockIDGenerator is a mock of IDGenerator interface.
+type mockIDGenerator struct {
+	ctrl     *gomock.Controller
+	recorder *mockIDGeneratorMockRecorder
+}
+
+// mockIDGeneratorMockRecorder is the mock recorder for mockIDGenerator.
+type mockIDGeneratorMockRecorder struct {
+	mock *mockIDGenerator
+}
+
+// NewmockIDGenerator creates a new mock instance.
+func NewmockIDGenerator(ctrl *gomock.Controller) *mockIDGenerator {
+	mock := &mockIDGenerator{ctrl: ctrl}
+	mock.recorder = &mockIDGeneratorMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *mockIDGenerator) EXPECT() *mockIDGeneratorMockRecorder {
+	return m.recorder
+}
+
+// GenerateID mocks base method.
+func (m *mockIDGenerator) GenerateID(prefix string) string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GenerateID", prefix)
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// GenerateID indicates an expected call of GenerateID.
+func (mr *mockIDGeneratorMockRecorder) GenerateID(prefix interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateID", reflect.TypeOf((*mockIDGenerator)(nil).GenerateID), prefix)
 }

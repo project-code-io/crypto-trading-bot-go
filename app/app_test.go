@@ -9,7 +9,9 @@ import (
 	"go.uber.org/zap/zaptest"
 
 	"github.com/project-code-io/crypto-trading-bot-go/app"
-	"github.com/project-code-io/crypto-trading-bot-go/pair"
+	"github.com/project-code-io/crypto-trading-bot-go/exchange"
+	"github.com/project-code-io/crypto-trading-bot-go/order"
+	"github.com/project-code-io/crypto-trading-bot-go/trading"
 )
 
 func TestAppStart(t *testing.T) {
@@ -22,6 +24,7 @@ func TestAppStart(t *testing.T) {
 		logger := zaptest.NewLogger(t)
 
 		mockExchange := app.NewmockExchangeClient(ctrl)
+		mockExchange.EXPECT().ListOrders(gomock.Any()).Return([]exchange.Order{}, nil)
 
 		a := app.New(logger, mockExchange)
 
@@ -41,13 +44,28 @@ func TestAppStart(t *testing.T) {
 		logger := zaptest.NewLogger(t)
 
 		mockExchange := app.NewmockExchangeClient(ctrl)
-		mockExchange.EXPECT().GetLastPrice(gomock.Any(), pair.BTCUSD).Times(2).Return("0.00", nil)
+		mockExchange.EXPECT().ListOrders(gomock.Any()).Return([]exchange.Order{}, nil)
+		mockExchange.EXPECT().GetLastPrice(gomock.Any(), trading.BTCUSD).Times(2).Return("1000.00", nil)
+		mockExchange.EXPECT().GetBalance(gomock.Any(), trading.USD).Times(2).Return(int64(5000), nil)
 
-		a := app.New(logger, mockExchange)
+		mockExchange.EXPECT().CreateLimitOrder(gomock.Any(), order.Limit{
+			ClientID: "foobar",
+			Pair:     trading.BTCUSD,
+			Side:     order.SideBuy,
+			BaseSize: "0.01",
+			Price:    "500",
+			PostOnly: true,
+		}).Times(2).Return(exchange.Order{}, nil)
+
+		idGen := app.NewmockIDGenerator(ctrl)
+		idGen.EXPECT().GenerateID("go-trading-bot").Times(2).Return("foobar")
+
+		a := app.New(logger, mockExchange, app.WithIDGenerator(idGen))
 
 		ctx, cancel := context.WithCancel(context.Background())
 
 		go a.Start(ctx)
+
 		time.Sleep(time.Second*2 + time.Millisecond*20)
 		cancel()
 	})

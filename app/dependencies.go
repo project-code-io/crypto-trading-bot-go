@@ -1,15 +1,25 @@
-//go:generate mockgen -source=dependencies.go -destination=./mocks.go -package=app -mock_names ExchangeClient=mockExchangeClient
+//go:generate mockgen -source=dependencies.go -destination=./mocks.go -package=app -mock_names ExchangeClient=mockExchangeClient,IDGenerator=mockIDGenerator
 
 package app
 
 import (
 	"context"
 
-	"github.com/project-code-io/crypto-trading-bot-go/pair"
+	"github.com/project-code-io/crypto-trading-bot-go/exchange"
+	"github.com/project-code-io/crypto-trading-bot-go/order"
+	"github.com/project-code-io/crypto-trading-bot-go/trading"
 )
 
 // ExchangeClient represents a type that is able to communicate with an
 // exchange.
 type ExchangeClient interface {
-	GetLastPrice(ctx context.Context, p pair.Pair) (string, error)
+	GetLastPrice(ctx context.Context, pair trading.Pair) (string, error)
+	CreateLimitOrder(ctx context.Context, order order.Limit) (exchange.Order, error)
+	CancelOrder(ctx context.Context, orderID string) error
+	ListOrders(ctx context.Context) ([]exchange.Order, error)
+	GetBalance(ctx context.Context, asset trading.Asset) (int64, error)
+}
+
+type IDGenerator interface {
+	GenerateID(prefix string) string
 }
