@@ -32,7 +32,7 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
-	exc, err := exchange.NewNoop()
+	exc, err := exchange.NewCoinbase()
 	if err != nil {
 		logger.Error("failed to load exchange", zap.Error(err))
 		return

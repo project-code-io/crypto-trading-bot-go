@@ -35,7 +35,7 @@ var ErrBadBinanceDomain = errors.New(
 	"the binance domain does not match the location of the bot",
 )
 
-func (e *Binance) convertPairValue(p trading.Pair) (string, error) {
+func (e *Binance) convertPairValue(p trading.Pair) (string, error) { // pair.Pair could be trading.Pair instead maybe
 	switch p {
 	case trading.BTCUSD:
 		return "BTCUSD", nil

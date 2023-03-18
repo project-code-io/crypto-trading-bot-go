@@ -14,4 +14,8 @@ var (
 	// ErrMissingPair describes an error that occurs when a pair has not
 	// been implemented for an exchange.
 	ErrMissingPair = errors.New("pair value is missing for exchange")
+
+	ErrMissingAsset = errors.New("asset value is missing for exchange")
+
+	ErrOrderFailed = errors.New("order failed")
 )
